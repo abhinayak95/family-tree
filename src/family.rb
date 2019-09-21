@@ -1,18 +1,22 @@
-class Family
+require_relative '../src/person.rb'
 
+class Family
   attr_accessor :member
 
   def initialize
     @member = []
   end
 
-  def add(person)
-    @member << person
+  def add(member)
+    @member << Person.new(member)
   end
 
-  def get_root_member
-    person = @member.first
-    person.get_name
+  def members
+    @member.map { |m| m.name}
+  end
+
+  def get_member(name)
+    @member.select{|p| p.name == name}
   end
 
 end

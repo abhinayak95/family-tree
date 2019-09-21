@@ -5,7 +5,7 @@ class Terminal
   end
 
   def get_user_input
-    input = gets
+    gets.strip
   end
 
   def print(message)
