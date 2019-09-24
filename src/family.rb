@@ -1,18 +1,18 @@
+require_relative '../src/relative.rb'
+require_relative '../src/person.rb'
+
 class Family
 
-  attr_accessor :member
-
   def initialize
-    @member = []
+    @members = []
   end
 
   def add(person)
-    @member << person
+    @members << person
   end
 
-  def get_root_member
-    person = @member.first
-    person.get_name
+  def get_member(name)
+    person = @members.select { |member| member.get_name == name }.first
   end
 
 end
