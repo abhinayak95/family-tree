@@ -47,7 +47,7 @@ class Family
     @members << person
   end
 
-  def prefill(family)
+  def prefill
     [%w(John\ Shakespeare Male), %w(Mary\ Arden Female),
      %w(Goan Female), %w(Margaret Female),
      %w(Gilbert Male), %w(Joan Female),
@@ -58,7 +58,7 @@ class Family
      %w(Judith Female), %w(Thomas\ Quiney Male),
      %w(Elizabeth Female), %w(Shakespeare Male),
      %w(Richard Male), %w(Thomas Male)].each do |person|
-      family.add_person(person[0], person[1])
+      add_person(person[0], person[1])
     end
   end
 
