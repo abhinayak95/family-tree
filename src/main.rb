@@ -8,12 +8,20 @@ class Main
   attr_accessor :family, :terminal
 
   def initialize
+    @continue = true
     @terminal = Terminal.new
-    @family = Family.new @terminal
+    @family = Family.new
+
+    prefill
+    puts @family.members
+  end
+
+  def continue?
+    @continue
   end
 
   def run
-    while true
+    while continue?
       show_options
       option = @terminal.get_user_input.to_i
       select_option option
@@ -26,19 +34,29 @@ class Main
       1. Add all members
       2. Add a person
       3. Add a relationship
+      4. Quit
       ")
   end
 
+  def add_relationship
+    # code here
+  end
+
   def select_option option
-    add_all_members if option == 3
-    @family.add_person if option == 2
-    @family.add_all_members if option == 1
+    @continue = false if option == 4
+    add_relationship if option == 3
+    add_person if option == 2
+    add_all_members if option == 1
   end
 
   def add_all_members
     @terminal.print("How many members does the family have?")
     count = @terminal.get_user_input.to_i
-    @family.add_all_members count
+    count.times do |i|
+      name, gender = @terminal.get_user_input.split(' ')
+      person_added = @family.add_person(name, gender)
+      @terminal.print("Invalid Input") unless person_added
+    end
   end
 
   def add_person

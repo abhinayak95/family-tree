@@ -13,20 +13,16 @@ class Family
     person = @members.select { |member| member.get_name == name }.first
   end
 
-
-  def add_all_members count
-    for i in 1..count do 
-      add_person
-    end
+  def members
+    @members
   end
 
-
   def add_person name, gender 
-    if validate_person_input name, gender == true
+    if validate_person name, gender
       add_to_family name, gender
-      return true
+      true
     else 
-      return false
+      false
     end
   end
 
@@ -42,18 +38,28 @@ class Family
     add person
   end
 
-  def validate_person_input name, gender
-    if gender == nil 
-      return false
-    else
-      add_to_family name, gender
-      return true
-    end
+  def validate_person _name, gender
+    true if gender
   end
 
 
   def add(person)
     @members << person
+  end
+
+  def prefill(family)
+    [%w(John\ Shakespeare Male), %w(Mary\ Arden Female),
+     %w(Goan Female), %w(Margaret Female),
+     %w(Gilbert Male), %w(Joan Female),
+     %w(Anne Female), %w(Richard Male),
+     %w(Edmund Male), %w(William Male),
+     %w(Anne Hathaway Female), %w(Susanna Female),
+     %w(John\ Hall Male), %w(Hamnet Male),
+     %w(Judith Female), %w(Thomas\ Quiney Male),
+     %w(Elizabeth Female), %w(Shakespeare Male),
+     %w(Richard Male), %w(Thomas Male)].each do |person|
+      family.add_person(person[0], person[1])
+    end
   end
 
 end
