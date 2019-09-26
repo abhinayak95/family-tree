@@ -10,7 +10,7 @@ class Family
 
 
   def get_member(name)
-    person = @members.select { |member| member.get_name == name }.first
+    @members.select { |member| member.get_name == name }.first
   end
 
   def members
