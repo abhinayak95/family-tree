@@ -3,6 +3,9 @@ require_relative '../src/family.rb'
 require_relative '../src/person.rb'
 require_relative '../src/relative.rb'
 require_relative '../src/relation_manager.rb'
+require_relative '../src/relation_console.rb'
+require_relative '../src/query.rb'
+require_relative '../src/siblings_query.rb'
 
 class Main
   attr_accessor :family, :terminal
@@ -11,8 +14,10 @@ class Main
     @continue = true
     @terminal = Terminal.new
     @family = Family.new
-
-    prefill
+    @relation_manager = RelationManager.new @family
+    @relation_console = RelationConsole.new @relation_manager, @terminal
+    @family.prefill
+    @relation_manager.prefill
     puts @family.members
   end
 
@@ -34,16 +39,25 @@ class Main
       1. Add all members
       2. Add a person
       3. Add a relationship
-      4. Quit
+      4. Find all siblings
+      5. Quit
       ")
   end
 
   def add_relationship
-    # code here
+    @relation_console.add_relation
+  end
+
+  def find_all_siblings
+    @terminal.print "Enter a name to find siblings"
+    name = @terminal.get_user_input
+    query = SiblingQuery.new @family
+    puts query.execute name
   end
 
   def select_option option
-    @continue = false if option == 4
+    @continue = false if option == 5
+    find_all_siblings if option == 4
     add_relationship if option == 3
     add_person if option == 2
     add_all_members if option == 1

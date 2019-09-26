@@ -4,7 +4,6 @@ require_relative '../src/person.rb'
 class Family
 
   def initialize
-  	@relation_manager = RelationManager.new @terminal, self
     @members = []
   end
 
@@ -26,27 +25,6 @@ class Family
     end
   end
 
-
-  def add_relation
-  	@relation_manager.add_relation
-  end
-
-  private
-
-  def add_to_family name, gender
-    person = Person.new name, gender
-    add person
-  end
-
-  def validate_person _name, gender
-    true if gender
-  end
-
-
-  def add(person)
-    @members << person
-  end
-
   def prefill
     [%w(John\ Shakespeare Male), %w(Mary\ Arden Female),
      %w(Goan Female), %w(Margaret Female),
@@ -60,6 +38,21 @@ class Family
      %w(Richard Male), %w(Thomas Male)].each do |person|
       add_person(person[0], person[1])
     end
+  end
+
+  private
+
+  def add_to_family name, gender
+    person = Person.new name, gender
+    add person
+  end
+
+  def validate_person _name, gender
+    true if gender
+  end
+
+  def add(person)
+    @members << person
   end
 
 end

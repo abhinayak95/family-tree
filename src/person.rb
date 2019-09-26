@@ -12,6 +12,10 @@ class Person
     @relations.add(person, relation)
   end
 
+  def get_name
+    @name
+  end
+
   def get_gender
     @gender
   end

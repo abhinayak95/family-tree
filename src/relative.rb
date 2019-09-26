@@ -9,11 +9,11 @@ class Relative
     @relation
   end
 
-  def get_relative
+  def get_person
     @person
   end
 
   def to_s
-    @relation
+    "#{@person}  #{@relation}"
   end
 end
