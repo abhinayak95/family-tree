@@ -1,14 +1,11 @@
 class Terminal
 
-  def initialize
-
-  end
-
   def get_user_input
-    gets.strip
+    input = gets.chomp
   end
 
   def print(message)
     puts message
   end
+
 end

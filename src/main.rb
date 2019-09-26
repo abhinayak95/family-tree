@@ -1,50 +1,70 @@
 require_relative '../src/terminal.rb'
 require_relative '../src/family.rb'
+require_relative '../src/person.rb'
+require_relative '../src/relative.rb'
+require_relative '../src/relation_manager.rb'
 
 class Main
   attr_accessor :family, :terminal
 
   def initialize
-    @family = Family.new
+    @continue = true
     @terminal = Terminal.new
-  end
+    @family = Family.new
 
-  def run
-    show_welcome_screen
-
-    user_input = @terminal.get_user_input
-
-    case user_input
-    when "1"
-      name = @terminal.get_user_input
-      @family.add name
-    when "2"
-      @terminal.print("Please enter as follows:
-FATHER
-SON
-father")
-      first_member = @terminal.get_user_input
-      second_member = @terminal.get_user_input
-      related_as = @terminal.get_user_input
-
-
-
-    else
-      @terminal.print("Please select a valid option")
-    end
-
+    prefill
     puts @family.members
   end
 
-  def show_welcome_screen
-    @terminal.print(
-"Welcome to TV Family Tree!
-What would you like to do?
-1. Add a member
-2. Create a relationship
-Select an option[1-2]:
-")
+  def continue?
+    @continue
   end
+
+  def run
+    while continue?
+      show_options
+      option = @terminal.get_user_input.to_i
+      select_option option
+    end
+  end
+
+  def show_options
+    @terminal.print("
+      Select an option:
+      1. Add all members
+      2. Add a person
+      3. Add a relationship
+      4. Quit
+      ")
+  end
+
+  def add_relationship
+    # code here
+  end
+
+  def select_option option
+    @continue = false if option == 4
+    add_relationship if option == 3
+    add_person if option == 2
+    add_all_members if option == 1
+  end
+
+  def add_all_members
+    @terminal.print("How many members does the family have?")
+    count = @terminal.get_user_input.to_i
+    count.times do |i|
+      name, gender = @terminal.get_user_input.split(' ')
+      person_added = @family.add_person(name, gender)
+      @terminal.print("Invalid Input") unless person_added
+    end
+  end
+
+  def add_person
+    @terminal.print("Enter name and gender seperated by space i.e Manish male")
+    person_details = @terminal.get_user_input.downcase.split(" ")
+    @family.add_person person_details[0], person_details[1]
+  end
+
 end
 
 Main.new.run
