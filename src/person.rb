@@ -12,6 +12,10 @@ class Person
     @name
   end
 
+  def get_gender
+    @gender
+  end
+
   def get_relatives
   	@relatives
   end
@@ -22,6 +26,10 @@ class Person
 
   def add_relative(relative)
   	@relatives << relative
+  end
+
+  def to_s
+    "#{@name}-#{@gender}"
   end
 
 end
