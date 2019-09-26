@@ -30,9 +30,21 @@ class Main
   end
 
   def select_option option
-    @family.add_relation if option == 3
+    add_all_members if option == 3
     @family.add_person if option == 2
     @family.add_all_members if option == 1
+  end
+
+  def add_all_members
+    @terminal.print("How many members does the family have?")
+    count = @terminal.get_user_input.to_i
+    @family.add_all_members count
+  end
+
+  def add_person
+    @terminal.print("Enter name and gender seperated by space i.e Manish male")
+    person_details = @terminal.get_user_input.downcase.split(" ")
+    @family.add_person person_details[0], person_details[1]
   end
 
 end

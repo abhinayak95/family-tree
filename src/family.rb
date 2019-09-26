@@ -3,29 +3,33 @@ require_relative '../src/person.rb'
 
 class Family
 
-  def initialize terminal
-  	@terminal = terminal
+  def initialize
   	@relation_manager = RelationManager.new @terminal, self
     @members = []
   end
+
 
   def get_member(name)
     person = @members.select { |member| member.get_name == name }.first
   end
 
-  def add_all_members
-    @terminal.print("How many members does the family have?")
-    count = @terminal.get_user_input.to_i
+
+  def add_all_members count
     for i in 1..count do 
       add_person
     end
   end
 
-  def add_person
-    @terminal.print("Enter name and gender seperated by space i.e Manish male")
-    person_details = @terminal.get_user_input.split(" ")
-    validate_person_input person_details
+
+  def add_person name, gender 
+    if validate_person_input name, gender == true
+      add_to_family name, gender
+      return true
+    else 
+      return false
+    end
   end
+
 
   def add_relation
   	@relation_manager.add_relation
@@ -33,23 +37,20 @@ class Family
 
   private
 
-  def validate_person_input person_details
-  	name = person_details[0]
-    gender = person_details[1]
+  def add_to_family name, gender
+    person = Person.new name, gender
+    add person
+  end
+
+  def validate_person_input name, gender
     if gender == nil 
-      @terminal.print "invalid gender please try again"
-      add_person
-      return
+      return false
     else
       add_to_family name, gender
+      return true
     end
   end
 
-  def add_to_family name, gender 
-    person = Person.new name, gender
-    add person
-    @terminal.print("#{person} added to family")
-  end
 
   def add(person)
     @members << person
