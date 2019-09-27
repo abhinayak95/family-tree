@@ -14,7 +14,7 @@ RSpec.describe Family do
   end
 
   it 'adds a person to family' do
-    family = Family.new @terminal
+    family = Family.new 
     person = Person.new "person_name", "female"
     family.add person
     member = family.get_member "test"

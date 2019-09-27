@@ -6,6 +6,7 @@ require_relative '../src/relation_manager.rb'
 require_relative '../src/relation_console.rb'
 require_relative '../src/query.rb'
 require_relative '../src/siblings_query.rb'
+require_relative '../src/all_daughter_query.rb'
 
 class Main
   attr_accessor :family, :terminal
@@ -40,7 +41,8 @@ class Main
       2. Add a person
       3. Add a relationship
       4. Find all siblings
-      5. Quit
+      5. Get all daughters
+      6. Quit
       ")
   end
 
@@ -55,8 +57,16 @@ class Main
     puts query.execute name
   end
 
+  def find_all_daughters
+    @terminal.print "Enter a name to find daughters"
+    name = @terminal.get_user_input
+    query = AllDaughterQuery.new @family
+    puts query.execute name
+  end
+
   def select_option option
-    @continue = false if option == 5
+    @continue = false if option == 6
+    find_all_daughters if option == 5
     find_all_siblings if option == 4
     add_relationship if option == 3
     add_person if option == 2
